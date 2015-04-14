@@ -151,6 +151,11 @@ report = function (subject) {
 		//alert('Number of found subjects: ' + num + '\n' + str);
 		//console.log('Vas te faire foutre!');
 		document.getElementById('p_infos').innerHTML = str;
+
+		$('#infos').css("background-color", "gray");
+		setTimeout(function(){
+			$('#infos').css("background-color", "");
+		}, 500);
 };
 
 

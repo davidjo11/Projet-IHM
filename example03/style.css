@@ -186,3 +186,9 @@ div#drag td{
 			width: 40px;
 			padding: 0px;
 		}
+
+
+a[href='http://www.redips.net/javascript/drag-and-drop-table-content/'],a[href='../'] {
+	visibility: hidden;
+}
+
