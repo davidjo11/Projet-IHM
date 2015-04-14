@@ -5,12 +5,6 @@
 		<meta name="description" content="Drag and drop table content with JavaScript"/>
 		<meta name="viewport" content="width=device-width, user-scalable=no"/><!-- "position: fixed" fix for Android 2.2+ -->
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
-		<script type="text/javascript">
-			var redipsURL = '/javascript/drag-and-drop-example-3/';
-		</script>
-		<script type="text/javascript" src="../header.js"></script>
-		<script type="text/javascript" src="../redips-drag-min.js"></script>
-		<script type="text/javascript" src="script.js"></script>
 		<title>Example 3: School timetable (static)</title>
 	</head>
 	<body>
@@ -25,18 +19,24 @@
 							<col width="190"/>
 						</colgroup>
 						<tbody>
-							<tr><td class="dark"><div id="ar" class="drag clone ar">Arts</div><input id="b_ar" class="ar" type="button" value="" onclick="report('ar')" title="Show only Arts"/></td></tr>
-							<tr><td class="dark"><div id="bi" class="drag clone bi">Biology</div><input id="b_bi" class="bi" type="button" value="" onclick="report('bi')" title="Show only Biology"/></td></tr>
-							<tr><td class="dark"><div id="ch" class="drag clone ch">Chemistry</div><input id="b_ch" class="ch" type="button" value="" onclick="report('ch')" title="Show only Chemistry"/></td></tr>
-							<tr><td class="dark"><div id="en" class="drag clone en">English</div><input id="b_en" class="en" type="button" value="" onclick="report('en')" title="Show only English"/></td></tr>
-							<tr><td class="dark"><div id="et" class="drag clone et">Ethics</div><input id="b_et" class="et" type="button" value="" onclick="report('et')" title="Show only Ethics"/></td></tr>
-							<tr><td class="dark"><div id="hi" class="drag clone hi">History</div><input id="b_hi" class="hi" type="button" value="" onclick="report('hi')" title="Show only History"/></td></tr>
-							<tr><td class="dark"><div id="it" class="drag clone it">IT</div><input id="b_it" class="it" type="button" value="" onclick="report('it')" title="Show only IT"/></td></tr>
-							<tr><td class="dark"><div id="ma" class="drag clone ma">Mathematics</div><input id="b_ma" class="ma" type="button" value="" onclick="report('ma')" title="Show only Mathematics"/></td></tr>
-							<tr><td class="dark"><div id="ph" class="drag clone ph">Physics</div><input id="b_ph" class="ph" type="button" value="" onclick="report('ph')" title="Show only Physics"/></td></tr>
+							<tr><td class="dark" style="padding-left: 50px"><div id="ar" class="drag clone ar">Arts</div><!--<input id="b_ar" class="ar" type="button" value="" onclick="report('ar')" title="Show only Arts"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="bi" class="drag clone bi" onclick="report('bi')">Biology</div><!--<input id="b_bi" class="bi" type="button" value="" onclick="report('bi')" title="Show only Biology"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="ch" class="drag clone ch" onclick="report('ch')">Chemistry</div><!--<input id="b_ch" class="ch" type="button" value="" onclick="report('ch')" title="Show only Chemistry"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="en" class="drag clone en" onclick="report('en')">English</div><!--<input id="b_en" class="en" type="button" value="" onclick="report('en')" title="Show only English"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="et" class="drag clone et" onclick="report('et')">Ethics</div><!--<input id="b_et" class="et" type="button" value="" onclick="report('et')" title="Show only Ethics"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="hi" class="drag clone hi" onclick="report('hi')">History</div><!--<input id="b_hi" class="hi" type="button" value="" onclick="report('hi')" title="Show only History"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="it" class="drag clone it" onclick="report('it')">IT</div><!--<input id="b_it" class="it" type="button" value="" onclick="report('it')" title="Show only IT"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="ma" class="drag clone ma" onclick="report('ma')">Mathematics</div><!--<input id="b_ma" class="ma" type="button" value="" onclick="report('ma')" title="Show only Mathematics"/>--></td></tr>
+							<tr><td class="dark"style="padding-left: 50px"><div id="ph" class="drag clone ph" onclick="report('ph')">Physics</div><!--<input id="b_ph" class="ph" type="button" value="" onclick="report('ph')" title="Show only Physics"/>--></td></tr>
 							<tr><td class="trash" title="Trash">Trash</td></tr>
 						</tbody>
 					</table>
+					<div id="infos" >
+						<h3>Informations:</h3>
+						<p id="p_infos">
+							CLIQUEZ SUR UNE MATIERE POUR AVOIR DES INFOS SUR CELLE-CI
+						</p>
+					</div>
 				</div><!-- left container -->
 				
 				<!-- right container -->
@@ -54,7 +54,7 @@
 							<tr>
 								<!-- if checkbox is checked, clone school subjects to the whole table row  -->
 								<td class="mark blank">
-									<input id="week" type="checkbox" title="Apply school subjects to the week" checked/>
+									<input id="week" type="checkbox" title="Apply school subjects to the week"/>
 									<input id="report" type="checkbox" title="Show subject report"/>
 								</td>
 								<td class="mark dark">Monday</td>
@@ -170,5 +170,17 @@
 			</div><!-- drag container -->
 			<div id="message">Drag school subjects to the timetable (clone subjects with SHIFT key)</div>
 		</div><!-- main container -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+				<script type="text/javascript">
+			var redipsURL = '/javascript/drag-and-drop-example-3/';
+		</script>
+		<script type="text/javascript" src="../header.js"></script>
+		<script type="text/javascript" src="../redips-drag-min.js"></script>
+		<script type="text/javascript" src="script.js"></script>
+		<script type="text/javascript">
+			$('.drag').mousedown(function (){
+				report2(this, $(this).attr("id"));
+			});
+		</script>
 	</body>
 </html>

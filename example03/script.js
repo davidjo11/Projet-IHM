@@ -20,19 +20,32 @@ redipsInit = function () {
 	// initialization
 	rd.init();
 	// REDIPS.drag settings
-	rd.dropMode = 'single';			// dragged elements can be placed only to the empty cells
+	rd.dropMode = 'switch';			// dragged elements can be placed only to the empty cells
 	rd.hover.colorTd = '#9BB3DA';	// set hover color
 	rd.clone.keyDiv = true;			// enable cloning DIV elements with pressed SHIFT key
 	// prepare node list of DIV elements in table2
 	divNodeList = document.getElementById('table2').getElementsByTagName('div');
 	// show / hide report buttons (needed for dynamic version - with index.php)
 	reportButton();
+
+	rd.event.moved = function () {
+		var	objOld = rd.objOld;
+
+		if($(objOld).hasClass('clone')){
+			rd.dropMode = 'single';
+		}
+		else{
+			rd.dropMode = 'switch';
+		}
+	}
+
 	// element is dropped
 	rd.event.dropped = function () {
 		var	objOld = rd.objOld,					// original object
 			targetCell = rd.td.target,			// target cell
 			targetRow = targetCell.parentNode,	// target row
 			i, objNew;							// local variables
+			
 		// if checkbox is checked and original element is of clone type then clone spread subjects to the week
 		if (document.getElementById('week').checked === true && objOld.className.indexOf('clone') > -1) {
 			// loop through table cells
@@ -45,6 +58,7 @@ redipsInit = function () {
 				objNew = rd.cloneObject(objOld);
 				// append to the table cell
 				targetRow.cells[i].appendChild(objNew);
+				$(objNew).removeClass('clone');
 			}
 		}
 		// print message only if target and source table cell differ
@@ -93,6 +107,8 @@ report = function (subject) {
 		num = 0,	// number of found subject
 		str = '';	// result string
 	// show all elements
+	
+		str += $('#'+subject).html() + "\n";
 	showAll();
 	// create array from node list (node list is global variable)
 	for (i = 0; i < divNodeList.length; i++) {
@@ -111,26 +127,30 @@ report = function (subject) {
 		// define only first two letters of ID
 		// (cloned elements have appended c1, c2, c3 ...)
 		id = div[i].id.substr(0, 2);
+
+		//str += $(div[i]).html() + "\n";
 		// if id is equal to the passed subject then we have a match
 		if (id === subject) { 
+
+
 			// define cell index
 			cellIndex = div[i].parentNode.cellIndex;
 			// table row is parent element of table cell 
 			rowIndex = div[i].parentNode.parentNode.rowIndex;
 			// add line with found element
-			str += day[cellIndex - 1] + '\t\t' + time[rowIndex - 1] + '\n';
+			str += "<p>" + day[cellIndex - 1] + '\t\t' + time[rowIndex - 1] + "\t[" + Math.floor(Math.random()*50) +']</p>';
 			// increase counter
 			num++;
 		}
 		// other elements should be hidden
-		else {
+		/*else {
 			div[i].style.visibility = 'hidden';
-		}
+		}*/
 	}
 	// if "Show report" is checked then show message
-	if (document.getElementById('report').checked === true) {
-		alert('Number of found subjects: ' + num + '\n' + str);
-	}
+		//alert('Number of found subjects: ' + num + '\n' + str);
+		//console.log('Vas te faire foutre!');
+		document.getElementById('p_infos').innerHTML = str;
 };
 
 
@@ -165,7 +185,7 @@ reportButton = function () {
 				style = 'visible';
 			}
 			// hide or show report button
-			document.getElementById(id).style.visibility = style;
+			// document.getElementById(id).style.visibility = style;
 		}
 	}
 };
@@ -193,3 +213,104 @@ if (window.addEventListener) {
 else if (window.attachEvent) {
 	window.attachEvent('onload', redipsInit);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function shows subject occurring in timetable
+var report2 = function (element,subject) {
+		// define day and time labels
+	var day = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+		time = ['08:00', '09:00', '10:00', '11:00', '12:00',
+		        '13:00', '14:00', '15:00', '16:00', '17:00',
+		        '18:00', '19:00', '20:00'],
+		div = [],	// define array
+		cellIndex,	// cell index
+		rowIndex,	// row index
+		id,			// element id
+		i,			// loop variable
+		num = 0,	// number of found subject
+		str = '';	// result string
+	// show all elements
+
+	console.log(element);
+			if($(element).hasClass('clone')){
+				REDIPS.drag.dropMode = 'single';
+			}
+			else{
+				REDIPS.drag.dropMode = 'switch';
+			}
+	
+		str += $('#'+subject).html() + "\n";
+	showAll();
+	// create array from node list (node list is global variable)
+	for (i = 0; i < divNodeList.length; i++) {
+		div[i] = divNodeList[i];
+	}
+	// sort div elements by the cellIndex (days in week) and rowIndex (hours)
+	div.sort(function (a, b) {
+		var a_ci = a.parentNode.cellIndex,				// a element cell index
+			a_ri = a.parentNode.parentNode.rowIndex,	// a element row index
+			b_ci = b.parentNode.cellIndex,				// b element cell index
+			b_ri = b.parentNode.parentNode.rowIndex;	// b element row index
+		return a_ci * 100 + a_ri - (b_ci * 100 + b_ri);
+	});
+	// loop goes through all collected elements
+	for (i = 0; i < div.length; i++) {
+		// define only first two letters of ID
+		// (cloned elements have appended c1, c2, c3 ...)
+		id = div[i].id.substr(0, 2);
+
+		//str += $(div[i]).html() + "\n";
+		// if id is equal to the passed subject then we have a match
+		if (id === subject) { 
+
+
+			// define cell index
+			cellIndex = div[i].parentNode.cellIndex;
+			// table row is parent element of table cell 
+			rowIndex = div[i].parentNode.parentNode.rowIndex;
+			// add line with found element
+			str += "<p>" + day[cellIndex - 1] + '\t\t' + time[rowIndex - 1] + "\t[" + Math.floor(Math.random()*50) +']</p>';
+			// increase counter
+			num++;
+		}
+		// other elements should be hidden
+		/*else {
+			div[i].style.visibility = 'hidden';
+		}*/
+	}
+	// if "Show report" is checked then show message
+		//alert('Number of found subjects: ' + num + '\n' + str);
+		//console.log('Vas te faire foutre!');
+		document.getElementById('p_infos').innerHTML = str;
+};

@@ -11,6 +11,11 @@ body{
 	margin: 0px; /* for IE6 / IE7 */
 }
 
+#infos {
+	height: 155px;
+    overflow-y: auto;
+    width: 190px;
+}
 
 /* drag container */
 #main_container{
@@ -19,7 +24,7 @@ body{
 }
 		/* container for the left table */
 		#main_container #left{
-			width: 130px;
+			width: 200px;
 			height: 320px;
 			float: left;
 			margin-right: 20px;

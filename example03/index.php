@@ -72,6 +72,10 @@ include('config.php');
 							<?php timetable('14:00', 7) ?>
 							<?php timetable('15:00', 8) ?>
 							<?php timetable('16:00', 9) ?>
+							<?php timetable('17:00', 10) ?>
+							<?php timetable('18:00', 11) ?>
+							<?php timetable('19:00', 12) ?>
+							<?php timetable('20:00', 13) ?>
 						</tbody>
 					</table>
 				</div><!-- right container -->
@@ -83,4 +87,5 @@ include('config.php');
 			</div>
 		</div><!-- main container -->
 	</body>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 </html>

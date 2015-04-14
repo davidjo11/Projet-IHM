@@ -165,7 +165,7 @@ REDIPS.drag = (function () {
 				question : null,
 				questionRow : null},
 		saveParamName = 'p',			// (string) save content parameter name
-		dropMode = 'multiple',			// (string) dropMode has the following options: multiple, single, switch, switching and overwrite
+		dropMode = 'switch',			// (string) dropMode has the following options: multiple, single, switch, switching and overwrite
 		multipleDrop = 'bottom',		// (string) defines position of dropped element in case of 'multiple' drop option
 		td = {},						// (object) contains reference to source (set in onmousedown), current (set in onmousemove and autoscroll), previous (set in onmousemove and autoscroll) and target cell (set in onmouseup)
 		animation = {pause : 20,		// (object) animation pause (integer), step (integer) and shift (boolean)
